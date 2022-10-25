@@ -8,10 +8,19 @@ const { contactsSchema } = require("../../models/contact");
 
 router.get("/", auth, async (req, res, next) => {
   const { _id } = req.user;
+ 
   const { page = 1, limit = 20 } = req.query;
-  const skip = (page - 1) * limit;
   
-  const data = await Contact.Contact.find({ owner: _id }, "", { skip, limit: +limit }).populate("owner", "_id email subscription");
+const skip = (page - 1) * limit;
+ const data = await Contact.Contact.find({ owner: _id }, "", { skip, limit: +limit }).populate("owner", "_id email subscription");
+  
+  if (req.query.favorite) {
+    const filter = data.filter(contact => contact.favorite === true)
+    res.json({
+      result:filter
+    })
+  }
+  
   res.json({
     status: "success",
     code: 200,
@@ -20,6 +29,7 @@ router.get("/", auth, async (req, res, next) => {
     },
   });
 });
+
 
 router.get("/:contactId", async (req, res, next) => {
   try {
@@ -170,5 +180,6 @@ router.patch("/:contactId/favorite", async (req, res, next) => {
     next(error);
   }
 });
+
 
 module.exports = router;
