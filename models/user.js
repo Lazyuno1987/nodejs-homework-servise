@@ -54,6 +54,9 @@ const joiLoginSchema = Joi.object({
      password: Joi.string().required(),
   email: Joi.string().required()
 })
+const joiVerifySchema = Joi.object({
+    email: Joi.string().required()
+})
 
 const joiSubscriptionSchema = Joi.object({
    password: Joi.string(),
@@ -62,7 +65,8 @@ const joiSubscriptionSchema = Joi.object({
 
 })
 module.exports = {
-User,
+  User,
+ joiVerifySchema, 
   joiLoginSchema,
   joiRegisterSchema,
   joiSubscriptionSchema

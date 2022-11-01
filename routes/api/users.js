@@ -1,16 +1,16 @@
 const express = require("express");
 const {users:ctrl}   = require("../../controllers");
-const {auth,  ctrlWrapper, upload } = require("../../middlewares");
+const {auth,  ctrlWrapper, upload, validation } = require("../../middlewares");
 const router = express.Router();
-const { User,  joiSubscriptionSchema } = require("../../models/user")
+const { User,  joiSubscriptionSchema, joiVerifySchema } = require("../../models/user")
 
 
 router.get("/current", auth,  ctrlWrapper(ctrl.getCurrent))
 
-router.get("/verify/:verificationToken",  ctrlWrapper(ctrl.verifyEmail))
+router.get("/verify/:verificationToken",  ctrlWrapper(ctrl.resendVerifyEmail))
 
 router.patch('/avatars', auth, upload.single('avatar'), ctrlWrapper(ctrl.updateAvatar) )
-
+router.post('/verify', validation(joiVerifySchema), ctrlWrapper(ctrl.resend))
 
 router.patch("/:userId/subscription", auth,  async (req, res, next) => {
   try {
