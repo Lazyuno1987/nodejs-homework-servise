@@ -19,6 +19,10 @@ const userSchema = Schema(
       type: String,
       default:null
     },
+    name: {
+      type: String,
+      required: [true, 'Name is required'],
+    },
     avatar: {
       type: String,
       required:true

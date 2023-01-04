@@ -5,10 +5,7 @@ const contactSchema = Schema(
       type: String,
       required: [true, "Set name for contact"],
     },
-    email: {
-      type: String,
-      required: [true, "Set email for contact"],
-    },
+  
     phone: {
       type: String,
       required: [true, "Set phone for contact"],
@@ -18,7 +15,8 @@ const contactSchema = Schema(
       default: false,
     },
       owner: {
-      type: Schema.Types.ObjectId,
+       type: Schema.Types.ObjectId,
+       
         ref: 'user',
       required:true
     }
@@ -30,7 +28,7 @@ const Contact = model("contact", contactSchema);
 const Joi = require("joi");
 const contactsSchema = Joi.object({
   name: Joi.string().required(),
-  email: Joi.string().required(),
+  // email: Joi.string().required(),
   phone: Joi.string().required(),
   favorite: Joi.bool(),
 });

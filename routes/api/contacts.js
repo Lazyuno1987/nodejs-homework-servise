@@ -7,13 +7,14 @@ const { contactsSchema } = require("../../models/contact");
 
 
 router.get("/", auth, async (req, res, next) => {
+ 
   const { _id } = req.user;
  
   const { page = 1, limit = 20 } = req.query;
   
 const skip = (page - 1) * limit;
  const data = await Contact.Contact.find({ owner: _id }, "", { skip, limit: +limit }).populate("owner", "_id email subscription");
-  
+ 
   if (req.query.favorite) {
     const filter = data.filter(contact => contact.favorite === true)
     res.json({
@@ -55,7 +56,8 @@ router.get("/:contactId", async (req, res, next) => {
   }
 });
 
-router.post("/", auth,  async (req, res, next) => {
+router.post("/", auth, async (req, res, next) => {
+  
   try {
     const { _id } = req.user;
  
@@ -127,7 +129,8 @@ router.put("/:contactId", async (req, res, next) => {
     );
     if (!result) {
       res.status(404).json({
-        status: "success",
+        mes:'fggrf',
+        status: "error",
         code: 404,
         message: "Not found",
       });
